@@ -4,6 +4,12 @@
 
 
 
+* Key:
+
+A strategy of moving pointers of the compared items in a main string and a pattern.
+
+The key is to solve the next position of the pointer when the items are not matched.
+
 
 
 * Code:

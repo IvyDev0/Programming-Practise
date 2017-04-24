@@ -6,11 +6,6 @@
 **fill the hole & divide-and-conquer**
 
 
-
-* Steps:
-
-
-
 * Code:
 
 ```c++

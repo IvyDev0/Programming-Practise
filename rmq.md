@@ -20,7 +20,7 @@ $$
 
 Query:
 
-![RMQ算法 - 天羽 - 天羽的博客](file://localhost/Users/Ivy11D/Library/Group%20Containers/UBF8T346G9.Office/msoclip1/01/3EACD3BB-AFA3-5E40-948B-DA528014B345.png)
+![RMQ算法 - 天羽 - 天羽的博客](file://localhost/Users/Ivy11D/Library/Group%20Containers/UBF8T346G9.Office/msoclip1/01/56DD88E0-7380-5F46-955A-9BCFE56CF41E.png)
 
 
 

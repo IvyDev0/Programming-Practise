@@ -3,7 +3,7 @@
 * Key: 
 
 
-**fill the hole & divide-and-conquer **
+**fill the hole & divide-and-conquer**
 
 
 

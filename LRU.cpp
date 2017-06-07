@@ -1,9 +1,11 @@
+// TODO
 template<class K, class T>
 struct Node 
 {
 	K type;
 	T data;
 	Node *prev, *next;
+
 }
 
 template<class K, class T>
@@ -14,13 +16,12 @@ class LRUcache
 	Node<K,T> *tail, *head;
 	Node<K,T> *entries;
 
-	// 分离结点
     void detach(Node<K,T>* node)
     {
         node->prev->next = node->next;
         node->next->prev = node->prev;
     }
-    // 将结点插入头部
+    // insert node after head
     void attach(Node<K,T>* node)
     {
         node->prev = head;
@@ -51,8 +52,48 @@ public:
 		delete[] entries;
 	}
 
-	// TODO:
-	void Put (K key, T data);
-	T Get (K key);
+	void Set (K key, T data) // Cache visit Mem and get data
+	{	
+		Node<K,T> *node = hashmap[key];
+		if (node) // key exist in cache
+		{
+			detach(node);
+			node->data = data;
+			attach(node);
+		}
+		else
+		{
+			if (free_entries.empty()) // no free, cache is full
+			{
+				node = tail->prev;
+				detach(node);
+				hashmap.erase(node->key); // delete the last node in cache
+			}
+			else
+			{	// free space --
+				node = free_entries.back();
+				free_entries.popback();
+			}
+			// set the new value
+			node->key = key;
+			node->data = data;
+			attach(node);
+			hashmap[key] = node;
+		}
+	}
 
+	T Get (K key) // ALU visit Cache, return data
+	{
+		Node<K,T> *node = hashmap[key];
+		if (node)
+		{
+			detach(node);
+			attach(node); // put node to the first
+			return node->data;
+		}
+		else
+		{
+			return T();  // what???
+		}
+	}
 }

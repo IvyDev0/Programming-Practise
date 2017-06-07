@@ -1,4 +1,3 @@
-// TODO
 template<class K, class T>
 struct Node 
 {
@@ -93,7 +92,7 @@ public:
 		}
 		else
 		{
-			return T();  // what???
+			return T();  // 66666
 		}
 	}
 }

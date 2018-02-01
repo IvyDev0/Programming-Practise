@@ -1,14 +1,13 @@
 template<class K, class T>
-struct Node 
+struct Node
 {
 	K type;
 	T data;
 	Node *prev, *next;
-
 }
 
 template<class K, class T>
-class LRUcache 
+class LRUcache
 {
 	hash_map<K, Node<K,T>*> hashmap;
 	vector<Node<K,T>*> free_entries;
@@ -30,7 +29,7 @@ class LRUcache
     }
 
 public:
-	LRUcache(size_t size) 
+	LRUcache(size_t size)
 	{
 		entries = new Node<K,T> [size];
 		for (int i = 0; i < size; ++i)
@@ -52,7 +51,7 @@ public:
 	}
 
 	void Set (K key, T data) // Cache visit Mem and get data
-	{	
+	{
 		Node<K,T> *node = hashmap[key];
 		if (node) // key exist in cache
 		{

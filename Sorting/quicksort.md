@@ -1,6 +1,6 @@
 ## Quick Sort
 
-* Key: 
+* Key:
 
 
 **fill the hole & divide-and-conquer**
@@ -9,29 +9,43 @@
 * Code:
 
 ```c++
-void quicksort(int a[], int l, int r)
+void exch(int * a, int i, int j)
 {
-    if(l<r)
-    {
-        int i = l, j = r, x = a[i];
-        while(i<j)
-        {
-            while(i<j && a[j]>=x) // find a[j]<x, take it as a hole
-                --j;
-            if(i<j)
-                a[i++] = a[j]; // fill this hole with finded item
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+}
 
-            while(i<j && a[i]<=x) // find a[i]>x
-                ++i;
-            if(i<j)
-                a[j--] = a[i]; // fill the hole 
-        }
-        a[i] = x; 
-      	// result: all items in front of x are smaller than x,
-     	// all items behind x are bigger than x.
-        quicksort(a, l, i-1);
-        quicksort(a, i+1, r);
+int partition(int * a, int lo, int hi)
+{
+    int k = lo, i = lo, j = hi;
+    while (true)
+    {
+        while (a[i] <= a[lo])
+            if (i == hi) break;
+
+        while (a[j] >= a[lo])
+            if (j == lo) break;
+
+        if (i >= j) break;
+        exch(a, i, j);
     }
+
+    exch(a, lo, j);
+    return j;
+}
+
+void sort(int * a, int lo, int hi)
+{
+    int k = partition(a, lo, hi);
+    sort(a, lo, k-1);
+    sort(a, k+1, hi);
+}
+
+bool QuickSort(int * a)
+{
+    // shuffle(a); // for performance
+    sort(a, 0, a.length - 1);
 }
 ```
 
@@ -46,6 +60,3 @@ Choosing the first or the last item would lead to a worst case when the array is
 Generating random number would cost more time.
 
 We can choosing the median among the three: l, r, (r-l)/2.
-
-
-

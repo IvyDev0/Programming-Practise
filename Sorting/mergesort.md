@@ -1,59 +1,50 @@
 ## Mergesort
 
-* Key: 
+* Key:
 
 **Divide and conquer**.
 
 * Complexity:
 
-The number of times we can halve n until we get to 1 is ⌈lg2 n⌉. 
+The number of times we can halve n until we get to 1 is log n.
 
-Because the recursion goes lg n levels deep, and a linear amount of work is done per level, mergesort takes **O(nlogn)** time in the worst case.
+Because the recursion goes log n levels deep, and a linear amount of work is done per level, mergesort takes **O(nlogn)** time in the worst case.
 
 * Code:
 
 ```c++
-void merge (int * a, int first, int mid, int last, int * temp)
+void merge (int * a, int * aux, int lo, int mid, int hi)
 {
-	int i = first, j = mid+1, k = 0;
+	// copy
+	for (int k = lo; k < hi; k++) aux[k] = a[k];
 
-	while (i<=mid && j<=last)
+	// merge, ascending
+	int i = lo, j = mid + 1;
+	for (int k = lo; k < hi; k++)
 	{
-		if (a[i]<=a[j]) // select the smaller one 
-			temp[k++] = a[i++];
-		else
-			temp[k++] = a[j++];
+		if (i > mid)     			 a[k] = aux[j++];
+		else if (j > hi) 			 a[k] = aux[i++];
+		else if (aux[i] <= aux[j]) a[k] = aux[i++];
+		else 						 a[k] = aux[j++];
 	}
-
-	// take all the left
-	while (i<=mid) 
-		temp[k++] = a[i++];
-	while (j<=last) 
-		temp[k++] = a[j++];
-
-	// copy the temp array back into a
-	for (int i = 0; i < k; ++i)
-		a[first+i] = temp[i];
 }
 
-void dividesort (int * a, int first, int last, int * temp)
+void sort (int * a, int * aux, int lo, int hi)
 {
-	if (first < last)
-	{
-		int mid = (first + last)/2;
-		dividesort (a, first, mid, temp);
-		dividesort (a, mid+1, last, temp);
-		merge (a, first, mid, last, temp);
-	}
+	if (hi <= lo) return;
+	int mid = lo + (hi - lo) / 2;
+	sort(a, aux, lo, mid);
+	sort(a, aux, mid, hi);
+	merge(a, aux, lo, mid, hi);
 }
 
 bool MergeSort (int * a)
 {
-	int * temp = new int[a.length];
-	if (temp==NULL)
+	int * aux = new int[a.length];
+	if (aux==NULL)
 		return false;
-	dividesort(a, 0, a.length-1, temp);
-	delete[] temp;
+	sort(a, aux, 0, a.length-1);
+	delete[] aux;
 	return true;
 }
 ```
@@ -62,9 +53,4 @@ bool MergeSort (int * a)
 
 * Analysis:
 
-Mergesort is a great algorithm for sorting **linked lists**, because it **does not rely on random access to elements** as does heapsort or quicksort. Its primary disadvantage is the need for **an auxilliary buffer** when sorting arrays. 
-
-
-
-
-
+Mergesort is a great algorithm for sorting **linked lists**, because it **does not rely on random access to elements** as does heapsort or quicksort. Its primary disadvantage is the need for **an auxilliary buffer** when sorting arrays.

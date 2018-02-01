@@ -2,10 +2,11 @@ struct Node
 {
 	Node *next;
 };
+
 bool Reverse(Node *head)
 {
 	Node *p = NULL, *t = head;
-	
+
 	if (head)
 		Node * n = head->next;
 	else
